@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "1r6EZF3tGds=",
+  "dgSpecHash": "Q4d39+55HEk=",
   "success": true,
-  "projectFilePath": "C:\\Users\\mcallisterj\\Documents\\software_design_iii\\FirstDemo\\FirstDemo.csproj",
+  "projectFilePath": "C:\\Users\\mcallisterj\\Documents\\software_design_iii\\repos\\software_design_iii_student_2025\\FirstDemo\\FirstDemo.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\mcallisterj\\.nuget\\packages\\humanizer\\2.14.1\\humanizer.2.14.1.nupkg.sha512",
     "C:\\Users\\mcallisterj\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
