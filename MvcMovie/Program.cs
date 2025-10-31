@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using MvcMovie.Data;
+using MvcMovie.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,12 +20,24 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
+using (var scope = app.Services.CreateScope()) {
+// await using (var scope = app.Services.CreateAsyncScope()) {    
+    var services = scope.ServiceProvider;
+
+    await SeedData.Initialize(services);
+}
+
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
+} else {
+    // Generates swagger.json
+    app.UseSwagger();
+    // Serves the Swagger UI at /swagger
+    app.UseSwaggerUI();
 }
 
 app.UseHttpsRedirection();
