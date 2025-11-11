@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using ChinookAutomapperExample.Data;
+using ChinookAutomapperExample.Services.Mapping;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,6 +18,10 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddAutoMapper(typeof(Program));
+
+builder.Services.AddSingleton<AlbumMappingService>();
+builder.Services.AddSingleton<ArtistMappingService>();
+builder.Services.AddSingleton<TrackMappingService>();
 
 var app = builder.Build();
 
