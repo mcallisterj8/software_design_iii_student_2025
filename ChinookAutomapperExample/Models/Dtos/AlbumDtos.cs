@@ -10,7 +10,7 @@ public class AlbumDto {
     public int ArtistId { get; set; }
 
 }
-public class AblumWithArtistDto : AlbumDto {
+public class AlbumWithArtistDto : AlbumDto {
     public virtual ArtistDto Artist { get; set; }
 
 }

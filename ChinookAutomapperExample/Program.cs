@@ -16,6 +16,8 @@ builder.Services.AddEndpointsApiExplorer();
 // Generates Swagger docs + UI
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddAutoMapper(typeof(Program));
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
