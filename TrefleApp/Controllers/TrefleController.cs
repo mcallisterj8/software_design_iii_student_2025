@@ -9,10 +9,10 @@ namespace TrefleApp.Controllers {
     [ApiController]
     public class TrefleController : ControllerBase {
 
-        private readonly TrefleService _trefleService;
+        private readonly PlantService _plantService;
 
-        public TrefleController(TrefleService trefleService) {
-            _trefleService = trefleService;
+        public TrefleController(PlantService trefleService) {
+            _plantService = trefleService;
         }
 
         [HttpGet("plants/{plantId}")]
@@ -23,8 +23,13 @@ namespace TrefleApp.Controllers {
 
         [HttpGet("plants")]
         public async Task<ActionResult<ICollection<PlantDto>>> GetPlants() {
-            // TODO: Complete
-            return Ok();
+            ICollection<PlantDto>? plants = await _plantService.GetPlants();
+
+            if(null == plants) {
+                return BadRequest("Expected list of plants but got null instead.");
+            }
+
+            return Ok(plants);
         }
     }
 }

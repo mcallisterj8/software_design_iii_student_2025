@@ -6,7 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddSingleton<TrefleApiService>();
-builder.Services.AddSingleton<TrefleService>();
+builder.Services.AddSingleton<PlantService>();
 
 // Provides endpoint metadata
 builder.Services.AddEndpointsApiExplorer();

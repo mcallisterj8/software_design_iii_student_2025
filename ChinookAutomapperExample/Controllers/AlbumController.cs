@@ -23,7 +23,13 @@ namespace ChinookAutomapperExample.Controllers {
 
         // [HttpGet("")]
         // public async Task<ActionResult<List<Album>>> GetAllAlbums() {
-        //     var albums = await _context.Album.ToListAsync();
+        //     var albums = await _context.Album
+        //     // .Include(a => a.Artist)
+        //     .Select(a => new {
+        //         AlbumTitle = a.Title,
+        //         ArtistName = a.Artist.Name
+        //     })
+        //     .ToListAsync();
 
         //     return Ok(albums);
         // }

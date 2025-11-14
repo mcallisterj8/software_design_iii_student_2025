@@ -9,12 +9,14 @@ namespace TrefleApp.Services;
 */
 public class TrefleApiService {
     private readonly RestClient _restClient;
-
     private readonly string? _apiKey;
     private readonly string? _baseUrl;
 
     public TrefleApiService(IConfiguration config) {
-        // TODO: Complete.
+        _apiKey = config["Trefle:ApiKey"];
+        _baseUrl = config["Trefle:BaseUrl"] ?? "";
+        _restClient = new RestClient(_baseUrl);
+
     }
 
     public async Task<PlantResponse?> GetPlantById(int plantId) {
@@ -23,8 +25,14 @@ public class TrefleApiService {
     }
 
     public async Task<PlantListResponse?> GetPlants() {
-        // TODO: Complete.
-        return null;
+        var request = new RestRequest($"/plants?token={_apiKey}")
+            .AddHeader("accept", "application/json");
+
+        Console.WriteLine($"\n{request}\n");
+
+        var response = await _restClient.GetAsync(request);
+
+        return JsonSerializer.Deserialize<PlantListResponse>(response.Content);
     }
 
 }

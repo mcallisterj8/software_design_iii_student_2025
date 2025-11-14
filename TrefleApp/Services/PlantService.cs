@@ -9,11 +9,11 @@ namespace TrefleApp.Services;
     Responsible for calling the service which interacts with the API, and will
     transform the responses into what our app needs.
 */
-public class TrefleService {
+public class PlantService {
     private readonly TrefleApiService _trefleApiService;
     private readonly IMapper _mapper;
 
-    public TrefleService(
+    public PlantService(
         TrefleApiService trefleApiService,
         IMapper mapper
     ) {
@@ -27,7 +27,8 @@ public class TrefleService {
     }
 
     public async Task<ICollection<PlantDto>?> GetPlants() {
-        // TODO: Complete.
-        return null;
+        PlantListResponse? plantListResponse = await _trefleApiService.GetPlants();
+
+        return _mapper.Map<List<PlantDto>>(plantListResponse.Data);
     }
 }
