@@ -17,14 +17,13 @@ namespace TrefleApp.Controllers {
 
         [HttpGet("plants/{plantId}")]
         public async Task<ActionResult<PlantDto>> GetPlantById(int plantId) {
-
-
+            // TODO: Complete
             return Ok();
         }
 
         [HttpGet("plants")]
         public async Task<ActionResult<ICollection<PlantDto>>> GetPlants() {
-
+            // TODO: Complete
             return Ok();
         }
     }
