@@ -3,6 +3,7 @@ using System.Text;
 using RestSharp;
 using MusicApp.Models.Spotify;
 using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.Extensions.ObjectPool;
 
 namespace MusicApp.Services;
 
@@ -17,7 +18,7 @@ public class SpotifyApiService {
     private readonly string? _clientSecret;
     private readonly string? _encodedClientInfo;
 
-    private SpotifyTokenResponse? _accessToken;
+    private SpotifyTokenResponse? _accessTokenResponse;
 
     public SpotifyApiService(IConfiguration config) {
         _authBaseUrl = config["Spotify:AuthBaseUrl"] ?? "";
@@ -33,7 +34,15 @@ public class SpotifyApiService {
 
     }
 
-    public async Task<SpotifyTokenResponse> RequestNewAccessToken(){
+    private async Task<SpotifyTokenResponse> GetAccessTokenAsync() {
+        if(null == _accessTokenResponse || _accessTokenResponse.IsExpired()){
+            _accessTokenResponse = await this.RequestNewAccessToken();
+        }
+
+        return _accessTokenResponse;
+    }
+
+    private async Task<SpotifyTokenResponse> RequestNewAccessToken(){
         var request = new RestRequest($"/token", Method.Post)
             .AddHeader("Authorization", $"Basic {_encodedClientInfo}")
             .AddHeader("Content-Type", "application/x-www-form-urlencoded")
@@ -50,11 +59,31 @@ public class SpotifyApiService {
         SpotifyTokenResponse? res = JsonSerializer.Deserialize<SpotifyTokenResponse>(response.Content);
 
         if(null != res) {
-            _accessToken = res;
-            _accessToken.AcquiredAt = DateTime.UtcNow;
+            _accessTokenResponse = res;
+            _accessTokenResponse.AcquiredAt = DateTime.UtcNow;
         }
 
         return res;
+    }
+
+
+    public async Task<AlbumResponse> GetNewReleaseAlbums() {
+        SpotifyTokenResponse tokenResponse = await this.GetAccessTokenAsync();
+
+        var request = new RestRequest($"/browse/new-releases")
+            .AddHeader("Authorization", $"Bearer {_accessTokenResponse.AccessToken}")
+            .AddHeader("accept", "application/json");
+
+        var response = await _apiClient.GetAsync(request);
+
+        if (!response.IsSuccessStatusCode) {
+            Console.WriteLine($"\n\nRESPONSE STATUS:\n\n{response.StatusCode}");
+            Console.WriteLine($"\n\nErrorMessage:\n{response.ErrorMessage}\n\n");
+            Console.WriteLine($"\n\nError in Content:\n{response.Content}\n\n");
+        }
+
+        return JsonSerializer.Deserialize<AlbumResponse>(response.Content);
+
     }
 
 
