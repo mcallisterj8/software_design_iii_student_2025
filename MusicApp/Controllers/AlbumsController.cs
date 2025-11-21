@@ -13,10 +13,11 @@ namespace MusicApp.Controllers {
             _spotifyApiService = spotifyApiService;
         }
 
-        // [HttpGet("access-token")]
-        // public async Task<ActionResult> GetAccessToken() {
-        //     return Ok(await _spotifyApiService.GetAccessTokenAsync());
-        // }
+        [HttpGet("access-token")]
+        public async Task<ActionResult> GetAccessToken() {
+            // return Ok(await _spotifyApiService.GetAccessTokenAsync());
+            return Ok(await _spotifyApiService.RequestNewAccessToken());
+        }
 
         // [HttpGet("new-releases")]
         // public async Task<ActionResult<AlbumResponse>> GetNewReleaseAlbums() {
