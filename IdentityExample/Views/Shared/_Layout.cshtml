@@ -26,6 +26,27 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-blue" href="/api/guarded">Guarded Greeting</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link text-blue" href="/api/guarded/unguarded-endpoint">
+                                Unguarded Endpoint
+                            </a>
+                        </li>
+                        <li class="nav-item d-flex align-items-center">
+                            <span class="px-2">|</span>
+                        </li>
+                        <li class="nav-item"></li>
+                            <a class="nav-link text-success" href="/api/unguarded">Unguarded Greeting</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link text-success" href="/api/unguarded/guarded-endpoint">
+                                Unguarded Endpoint
+                            </a>
+                        </li>
                     </ul>
                     <partial name="_LoginPartial" />
                 </div>
